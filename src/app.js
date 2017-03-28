@@ -4,28 +4,31 @@ export class App {
 
   constructor(config) {
     this.config = config
-    this.target = document.getElementById('root')
   }
 
   render(data) {
-    this.target.innerHTML = [
-      ...this.renderPets(data.female, 'Male'),
+    if (data == undefined) return []
+    return [
+      ...this.renderPets(data.male, 'Male'),
       ...this.renderPets(data.female, 'Female')
-    ].join('\n')
+    ]
   }
 
   renderPets(pets, type) {
+    if (pets == undefined || type == undefined || type === '') return []
+    const petsHtml = pets.length > 0 ? pets.map(pet => `<li>${pet}</li>`) : ['<li>No Pets</li>']
     return [
-      '<h2>', type, '</h2>',
+      `<h2>${type}</h2>`,
       '<ul>',
-      ...pets.map(pet => `<li>${pet}</li>`),
+      ...petsHtml,
       '</ul>'
     ]
   }
 
   sortByName(data) {
+    if (data == undefined) return
     return Object.keys(data).reduce((object, key) => {
-      object[key] = data[key].sort()
+      object[key] = (data[key] || []).sort()
       return object;
     }, {})
   }
@@ -41,9 +44,8 @@ export class App {
     }, {})
   }
 
-  fetch() {
-    const { api } = this.config
-    return window.fetch(api.url, api.options)
+  fetch(api) {
+    return window.fetch(api.url + '', api.options)
       .then(response => {
         if (response.ok) {
           return response.json()
@@ -52,21 +54,25 @@ export class App {
       })
   }
 
-  showLoader() {
-    this.target.innerHTML = '<div class="loader">Loading...</div>'
+  renderLoader() {
+    return ['<div class="loader">Loading...</div>']
   }
 
-  showError(error) {
-    this.target.innerHTML = `<div class="error">FAILED: ${error.message || 'Something went wrong'}</div>`
+  renderError(error) {
+    console.error(error)
+    return [`<div class="error">FAILED: ${error.message || 'Something went wrong'}</div>`]
   }
 
   start() {
+    const target = document.getElementById('root')
     Promise.resolve()
-      .then(this.showLoader.bind(this))
-      .then(this.fetch.bind(this))
-      .then(this.categorize.bind(this))
-      .then(this.sortByName.bind(this))
+      .then(this.renderLoader)
+      .then(loader => target.innerHTML = loader.join('\n'))
+      .then(this.fetch.bind(this, this.config.api))
+      .then(this.categorize)
+      .then(this.sortByName)
       .then(this.render.bind(this))
-      .catch(this.showError.bind(this))
+      .catch(this.renderError)
+      .then(html => target.innerHTML = html.join('\n'))
   }
 }
