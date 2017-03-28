@@ -7,7 +7,7 @@
     "clean": "rimraf dist coverage",
     "start": "webpack-dev-server",
     "build": "npm run clean && npm run test && webpack",
-    "test": "babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report html --check-coverage -- --timeout 5000 -u tdd --recursive test  --require ignore-styles",
+    "test": "babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report text --report html --check-coverage -- --timeout 5000 -u tdd --recursive test  --require ignore-styles",
     "tdd": "mocha --require ignore-styles --compilers js:babel-core/register -w"
   },
   "repository": {
