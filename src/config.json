@@ -1,0 +1,9 @@
+{
+  "api": {
+    "url": "http://agl-developer-test.azurewebsites.net/people.json",
+    "options": {
+      "credentials": "include",
+      "mode": "cors"
+    }
+  }
+}

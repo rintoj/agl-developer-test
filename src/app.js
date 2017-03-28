@@ -1,22 +1,72 @@
+import './app.css'
+
 export class App {
-  helloWorld() {
-    return 'Hello World!'
+
+  constructor(config) {
+    this.config = config
+    this.target = document.getElementById('root')
+  }
+
+  render(data) {
+    this.target.innerHTML = [
+      ...this.renderPets(data.female, 'Male'),
+      ...this.renderPets(data.female, 'Female')
+    ].join('\n')
+  }
+
+  renderPets(pets, type) {
+    return [
+      '<h2>', type, '</h2>',
+      '<ul>',
+      ...pets.map(pet => `<li>${pet}</li>`),
+      '</ul>'
+    ]
+  }
+
+  sortByName(data) {
+    return Object.keys(data).reduce((object, key) => {
+      object[key] = data[key].sort()
+      return object;
+    }, {})
+  }
+
+  categorize(data) {
+    return data.reduce((petsByGender, item) => {
+      const key = item.gender.toLowerCase()
+      petsByGender[key] = (petsByGender[key] || []).concat(
+        (item.pets || []).filter(pet => pet.type === 'Cat')
+        .map(pet => pet.name)
+      )
+      return petsByGender
+    }, {})
   }
 
   fetch() {
-    return window.fetch('/api/people.json', {
-        header: {
-          host: 'agl-developer-test.azurewebsites.net',
-          cookie: 'ARRAffinity=500b81cbe62a1dd9b056e6e439f1f005b4833ca7b08b42f5b252ed2c64ccfdf4',
-          method: 'GET',
-          credentials: 'include'
-        },
-        credentials: 'include'
+    const { api } = this.config
+    return window.fetch(api.url, api.options)
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        }
+        throw new Error(response.statusText)
       })
-      .then(response => response.json())
+  }
+
+  showLoader() {
+    this.target.innerHTML = '<div class="loader">Loading...</div>'
+  }
+
+  showError(error) {
+    this.target.innerHTML = `<div class="error">FAILED: ${error.message || 'Something went wrong'}</div>`
   }
 
   start() {
-    this.fetch().then(data => console.log(data));
+    Promise.resolve()
+      .then(this.showLoader.bind(this))
+      .then(this.fetch.bind(this))
+      .then(this.categorize.bind(this))
+      .then(this.sortByName.bind(this))
+      .then(this.render.bind(this))
+      .catch(this.showError.bind(this))
   }
 }

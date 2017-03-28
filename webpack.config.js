@@ -5,7 +5,7 @@ module.exports = {
   entry: path.resolve(__dirname, "src/main.js"),
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
+    filename: "app-bundle.js",
     library: "agl-app",
     libraryTarget: "umd"
   },
@@ -17,6 +17,9 @@ module.exports = {
       options: {
         presets: ["es2015"]
       }
+    }, {
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader']
     }]
   },
   devServer: {
@@ -24,13 +27,11 @@ module.exports = {
     contentBase: path.join(__dirname, 'src'),
     https: false
   },
-
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
       template: path.join(__dirname, 'src/index.html'),
     })
   ],
-
   devtool: 'inline-source-map'
 }
