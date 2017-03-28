@@ -4,10 +4,10 @@
   "description": "Sample code to consume the json from http://agl-developer-test.azurewebsites.net/people.json and output a list of all the cats in alphabetical order under a heading of the gender of their owner.",
   "main": "src/app.js",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf dist coverage",
     "start": "webpack-dev-server",
-    "build": "npm run clean && webpack",
-    "test": "istanbul cover mocha -- --require ignore-styles --compilers js:babel-core/register",
+    "build": "npm run clean && npm run test && webpack",
+    "test": "babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report html --check-coverage -- --timeout 5000 -u tdd --recursive test  --require ignore-styles",
     "tdd": "npm run test -- -w"
   },
   "repository": {
@@ -28,6 +28,7 @@
   "devDependencies": {
     "babel-core": "^6.24.0",
     "babel-eslint": "^7.2.1",
+    "babel-istanbul": "^0.12.2",
     "babel-loader": "^6.4.1",
     "babel-preset-env": "^1.2.2",
     "babel-preset-es2015": "^6.24.0",
