@@ -8,7 +8,7 @@
     "start": "webpack-dev-server",
     "build": "npm run clean && npm run test && webpack",
     "test": "babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report html --check-coverage -- --timeout 5000 -u tdd --recursive test  --require ignore-styles",
-    "tdd": "npm run test -- -w"
+    "tdd": "mocha --require ignore-styles --compilers js:babel-core/register -w"
   },
   "repository": {
     "type": "git",

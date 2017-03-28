@@ -71,7 +71,7 @@ export class App {
 
   start() {
     const target = document.getElementById('root')
-    Promise.resolve()
+    return Promise.resolve()
       .then(this.renderLoader)
       .then(loader => target.innerHTML = loader.join('\n'))
       .then(this.fetch.bind(this, this.config.api.url))

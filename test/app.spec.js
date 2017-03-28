@@ -356,4 +356,17 @@ describe('App', () => {
       expect(result[0]).be.equal('<div class="error">FAILED: Something went wrong</div>')
     })
   })
+
+  describe('start', () => {
+    it('should get the dom element with id "root" as the target node', () => {
+      global.document = {
+        getElementById: spy(() => ({}))
+      }
+      app.start().then(() => {
+        expect(global.document.getElementById).to.have.been.called.with('root')
+      }, (error) => {
+        throw new Error('Failed')
+      })
+    })
+  })
 })
