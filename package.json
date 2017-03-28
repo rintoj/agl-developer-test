@@ -1,0 +1,35 @@
+{
+  "name": "agl-developer-test",
+  "version": "1.0.0",
+  "description": "Sample code to consume the json from http://agl-developer-test.azurewebsites.net/people.json and output a list of all the cats in alphabetical order under a heading of the gender of their owner.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack",
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rintoj/agl-developer-test.git"
+  },
+  "keywords": [
+    "JSON",
+    "Webpack",
+    "Babel"
+  ],
+  "author": "Rinto Jose",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rintoj/agl-developer-test/issues"
+  },
+  "homepage": "https://github.com/rintoj/agl-developer-test#readme",
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-env": "^1.2.2",
+    "babel-preset-es2015": "^6.24.0",
+    "html-webpack-plugin": "^2.28.0",
+    "webpack": "^2.3.2",
+    "webpack-dev-server": "^2.4.2"
+  }
+}
