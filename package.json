@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/rintoj/agl-developer-test#readme",
   "devDependencies": {
+    "babel-cli": "^6.24.0",
     "babel-core": "^6.24.0",
     "babel-eslint": "^7.2.1",
     "babel-istanbul": "^0.12.2",
@@ -40,7 +41,6 @@
     "ignore-styles": "^5.0.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
-    "nyc": "^10.2.0",
     "rimraf": "^2.6.1",
     "style-loader": "^0.16.0",
     "webpack": "^2.3.2",
