@@ -16,7 +16,9 @@ export class App {
 
   renderPets(pets, type) {
     if (pets == undefined || type == undefined || type === '') return []
-    const petsHtml = pets.length > 0 ? pets.map(pet => `<li>${pet}</li>`) : ['<li>No Pets</li>']
+    const petsHtml = pets.length > 0 ? pets.map(
+      pet => `<li><span>${pet.substr(0, 1).toUpperCase()}</span>${pet}</li>`
+    ) : ['<li>No Pets</li>']
     return [
       `<h2>${type}</h2>`,
       '<ul>',

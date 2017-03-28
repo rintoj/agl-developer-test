@@ -46,12 +46,16 @@ This project is written using the following tools:
 - [`Chai JS`](http://chaijs.com/) as the assertion library
 - [`Istanbul JS`](https://istanbul.js.org/) as the code coverage library
 
+## Output
+
+![Coverage Report](./docs/output.png)
+
 ## Coverage
 
 To get coverage report
 
 ```bash
-npm run test
+npm test
 ```
 
 ![Coverage Report](./docs/coverage-report.png)
