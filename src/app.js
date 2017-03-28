@@ -34,18 +34,25 @@ export class App {
   }
 
   categorize(data) {
-    return data.reduce((petsByGender, item) => {
-      const key = item.gender.toLowerCase()
-      petsByGender[key] = (petsByGender[key] || []).concat(
-        (item.pets || []).filter(pet => pet.type === 'Cat')
-        .map(pet => pet.name)
-      )
-      return petsByGender
-    }, {})
+    if (data == undefined) return
+    return data
+      .filter(item => ['male', 'female'].indexOf(item.gender.toLowerCase()) >= 0)
+      .reduce((petsByGender, item) => {
+        const key = item.gender.toLowerCase()
+        petsByGender[key] = petsByGender[key].concat(
+          (item.pets || []).filter(pet => pet.type === 'Cat')
+          .map(pet => pet.name)
+        )
+        return petsByGender
+      }, {
+        male: [],
+        female: []
+      })
   }
 
-  fetch(api) {
-    return window.fetch(api.url + '', api.options)
+  fetch(url) {
+    if (url == undefined) throw new Error('Missing url!')
+    return window.fetch(url)
       .then(response => {
         if (response.ok) {
           return response.json()
@@ -59,7 +66,6 @@ export class App {
   }
 
   renderError(error) {
-    console.error(error)
     return [`<div class="error">FAILED: ${error.message || 'Something went wrong'}</div>`]
   }
 
@@ -68,7 +74,7 @@ export class App {
     Promise.resolve()
       .then(this.renderLoader)
       .then(loader => target.innerHTML = loader.join('\n'))
-      .then(this.fetch.bind(this, this.config.api))
+      .then(this.fetch.bind(this, this.config.api.url))
       .then(this.categorize)
       .then(this.sortByName)
       .then(this.render.bind(this))
