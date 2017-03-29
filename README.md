@@ -61,3 +61,23 @@ npm test
 ![Coverage Report](./docs/coverage-report.png)
 
 HTML Report can be accessed from [here](./coverage/index.html)
+
+## Known Issue
+
+The server does not support Cross Origin Resource Sharing (CORS), therefore the below error may be shown:
+
+```bash
+FAILED: Failed to fetch
+```
+
+To fix this, start Google Chrome with disabled web-security using the following command:
+
+### In MAC
+```bash
+open -a "Google Chrome" --args --user-data-dir --disable-web-security
+```
+
+### In Windows
+```bash
+"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="C:\chrome"
+```
