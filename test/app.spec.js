@@ -36,14 +36,14 @@ describe('App', () => {
       expect(result).be.length(11)
       expect(result[0]).be.equal('<h2>Male</h2>')
       expect(result[1]).be.equal('<ul>')
-      expect(result[2]).be.equal('<li>Garfield</li>')
-      expect(result[3]).be.equal('<li>Tom</li>')
-      expect(result[4]).be.equal('<li>Nemo</li>')
+      expect(result[2]).be.equal('<li><span>G</span>Garfield</li>')
+      expect(result[3]).be.equal('<li><span>T</span>Tom</li>')
+      expect(result[4]).be.equal('<li><span>N</span>Nemo</li>')
       expect(result[5]).be.equal('</ul>')
       expect(result[6]).be.equal('<h2>Female</h2>')
       expect(result[7]).be.equal('<ul>')
-      expect(result[8]).be.equal('<li>Sam</li>')
-      expect(result[9]).be.equal('<li>Max</li>')
+      expect(result[8]).be.equal('<li><span>S</span>Sam</li>')
+      expect(result[9]).be.equal('<li><span>M</span>Max</li>')
       expect(result[10]).be.equal('</ul>')
 
     })
@@ -62,9 +62,9 @@ describe('App', () => {
       expect(result).be.length(6)
       expect(result[0]).be.equal('<h2>Male</h2>')
       expect(result[1]).be.equal('<ul>')
-      expect(result[2]).be.equal('<li>Garfield</li>')
-      expect(result[3]).be.equal('<li>Tom</li>')
-      expect(result[4]).be.equal('<li>Nemo</li>')
+      expect(result[2]).be.equal('<li><span>G</span>Garfield</li>')
+      expect(result[3]).be.equal('<li><span>T</span>Tom</li>')
+      expect(result[4]).be.equal('<li><span>N</span>Nemo</li>')
       expect(result[5]).be.equal('</ul>')
     })
 
@@ -94,6 +94,23 @@ describe('App', () => {
       expect(result[1]).be.equal('<ul>')
       expect(result[2]).be.equal('<li>No Pets</li>')
       expect(result[3]).be.equal('</ul>')
+    })
+  })
+
+  describe('renderPet', () => {
+    it('should html tag with given pet\'s name', () => {
+      const result = app.renderPet('Garfield')
+      expect(result).be.equal('<li><span>G</span>Garfield</li>')
+    })
+
+    it('should return empty string if pet\'s name is undefined', () => {
+      const result = app.renderPet(undefined)
+      expect(result).be.equal('')
+    })
+
+    it('should return empty string if pet\'s name is empty string', () => {
+      const result = app.renderPet(' ')
+      expect(result).be.equal('')
     })
   })
 
